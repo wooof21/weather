@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: weather
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+  graphql:
+    graphiql:
+      enabled: true
+
+  r2dbc:
+#    url: r2dbc:mysql://${MYSQL_HOST:172.18.0.2}:${MYSQL_PORT:3306}/${DB_NAME:weather}
+    url: r2dbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${DB_NAME:weather}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PWD:root}
+    pool:
+      enabled: true
+      max-size: 10
+      initial-size: 3
+      max-idle-time: 30m
+  sql:
+    init:
+      platform: mysql
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level:
+    com.weather: DEBUG
+    org.springframework.r2dbc.core: DEBUG
+    org.springframework.security: DEBUG
+    io.r2dbc.mysql: DEBUG
+    io.r2dbc.spi: DEBUG
+    io.r2dbc.pool: DEBUG
+#  datasource:
+#    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${DB_NAME:weather}?useSSL=false&serverTimezone=UTC
+#    username: ${MYSQL_USER:root}
+#    password: ${MYSQL_PWD:root}
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+
+
+
+
+api:
+#  https://www.weatherbit.io/api
+  weather:
+    key: 3092681bc019489f82ef4185a402c81a
+    base: https://api.weatherbit.io/v2.0/current
+#    https://aqicn.org/json-api/doc/
+  air_quality:
+    key: 680725fe6085f58eee40c7996cec5e7751b25982
+    base: https://api.waqi.info/feed
+
+
+
+server:
+  port: 8080
+  address: 0.0.0.0
