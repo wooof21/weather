@@ -1,0 +1,34 @@
+scalar Long
+
+type UnifiedCityData {
+    id: Int!
+    city: String
+    country: String
+    temperature: Float
+    weatherDescription: String
+    aqi: Int
+    airQualityStatus: String
+    weatherTimestamp: Long
+    timezone: String
+}
+
+type WeatherHistoryData {
+    status: String
+    weatherHistory: [UnifiedCityData]
+    errors: [String]
+}
+
+type UnifiedResponse {
+    status: String
+    data: UnifiedCityData
+    errors: [String]
+}
+
+type Query {
+    weatherHistory(city: String!): WeatherHistoryData
+    unifiedWeather(city: String!): UnifiedResponse
+}
+
+type Mutation {
+    saveCityWeatherData(city: String!): UnifiedCityData
+}
